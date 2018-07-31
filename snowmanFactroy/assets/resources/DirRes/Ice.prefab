@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Ice_Tong",
+    "_name": "Ice",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -47,8 +47,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 81,
-      "height": 93
+      "width": 58,
+      "height": 68
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -56,8 +56,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": -10,
+      "y": 20
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -75,7 +75,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "295897a5-d9de-42a6-a837-e6535663be4c"
+      "__uuid__": "773e861b-5495-4ef2-8d4c-0ec520414457"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -93,7 +93,7 @@
     "_atlas": null
   },
   {
-    "__type__": "d9af2EcNPpJ6bx6O7fyL10/",
+    "__type__": "45406W5VlVGRbGFvMkx7C/E",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -112,13 +112,13 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 7.3,
-      "y": 21.5
+      "x": 0,
+      "y": -29.5
     },
     "_size": {
       "__type__": "cc.Size",
       "width": 6,
-      "height": 8.2
+      "height": 8.1
     }
   },
   {
@@ -127,9 +127,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "19bba504-c391-4b82-999b-de032c7911dd"
+      "__uuid__": "d483f732-6559-4ee5-9b17-9e5ea8475710"
     },
-    "fileId": "db0hpwcxdHC6rTaN0smrro",
+    "fileId": "66VMm574tHSJDLKq1FHjKk",
     "sync": false
   }
 ]
