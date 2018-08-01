@@ -11,11 +11,15 @@ const GameControl = cc.Class({
     gameType: null, // 游戏类型
     moveV_x: null, // 移动的速度(x)
     moveV_y: null, // 移动速度（y）
+    gameTime: null,// 游戏时间
+    curTimer: null, // 开始的time
     ctor() {
         this.isGame = false;
         this.gameType = null;
-        this.moveV_x = 74 / 2;
-        this.moveV_y = -130;
+        this.moveV_x = 74 / 3;
+        this.moveV_y = -160;
+        this.gameTime = 0;
+        this.curTimer = null;
     },
     createIceTong(node) {
         const time = 2;
@@ -29,6 +33,15 @@ const GameControl = cc.Class({
             cc.log(`游戏还未开始`);
         }
 
+    },
+    startTimer() {
+        this.curTimer = setTimeout(() => {
+            this.gameTime++;
+            this.moveV_x = this.moveV_x * (0.5 / 20) + this.moveV_x;
+            if (this.gameTime <= 130) {
+                this.startTimer();
+            }
+        }, 1000);
     },
     createIce(node) {
         const ice_tong = cc.instantiate(cc.resManager.resList["ICE"]);

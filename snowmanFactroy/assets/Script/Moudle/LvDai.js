@@ -12,8 +12,9 @@ cc.Class({
     onLoad () {
         this.node.type = cc.gameCfg.ItemType.LVDAI;
         this.node.runAction(cc.repeatForever(cc.moveBy(0.5, cc.p(cc.gameControl.getMoveV_x(),0))));
+        this.curTimer = 0;
         if (cc.gameControl.getGameType() == cc.gameCfg.GameType.CRAZY) {
-            this.scheduleOnce(this.updateMoveV, 0.5);
+            this.schedule(this.updateMoveV, 1);
         }
     },
 
@@ -22,9 +23,13 @@ cc.Class({
     },
 
     updateMoveV() {
-        this.node.stopAllActions();
-        cc.gameControl.setMoveV_x(cc.gameControl.getMoveV_x() + 2);
-        this.node.runAction(cc.repeatForever(cc.moveBy(0.5, cc.p(cc.gameControl.getMoveV_x(),0))));
+        // cc.log(`${(cc.gameControl.gameTime) - this.curTimer}`);
+        if ((cc.gameControl.gameTime) - this.curTimer >= 10) {
+            cc.log(`开始加速`);
+            this.curTimer = cc.gameControl.gameTime;
+            this.node.stopAllActions();
+            this.node.runAction(cc.repeatForever(cc.moveBy(0.5, cc.p(cc.gameControl.getMoveV_x(),0))));
+        }
     },
 
 

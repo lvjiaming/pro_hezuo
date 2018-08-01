@@ -43,6 +43,9 @@ cc.Class({
         } else {
             cc.log(`节点为空`);
         }
+        if (cc.gameControl.getGameType() == cc.gameCfg.GameType.CRAZY) {
+            cc.gameControl.startTimer();
+        }
         this.setSnowState();
     },
     setSnowState() {

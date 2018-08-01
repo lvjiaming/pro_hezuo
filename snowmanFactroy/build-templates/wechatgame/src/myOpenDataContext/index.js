@@ -23,19 +23,23 @@ function drawRankList (data, type) {
 
         // 名次
         if (index <= 2) {
-            context.font = "50px Arial";
+            context.font = "40px Arial";
             context.fillStyle = "red";
             context.textAlign = 'left';
-            context.fillText(index + 1, 80, 70 * (posIndex) + 160, 400);
+            context.fillText(index + 1, 180, 60 * (posIndex) + 200, 400);
         } else {
-            context.font = "50px Arial";
+            context.font = "40px Arial";
             context.fillStyle = "red";
             context.textAlign = 'left';
-            context.fillText(index + 1, 80, 70 * (posIndex) + 160, 400);
+            let off_x = 0;
+            if ((index + 1) >= 10 ) {
+                off_x = -6
+            }
+            context.fillText(index + 1, 180 + off_x, 60 * (posIndex) + 200, 400);
         }
 
         // 昵称
-        context.font = "26px Arial";
+        context.font = "20px Arial";
         context.fillStyle = "red";
         context.textAlign = 'left';
         let newStr = "";
@@ -62,14 +66,14 @@ function drawRankList (data, type) {
         } else {
             newStr = item.nickname;
         }
-        context.fillText(newStr, 280, 70 * (posIndex) + 160, 400);
+        context.fillText(newStr, 280, 60 * (posIndex) + 190, 400);
 
         // 头像
         let images_head = wx.createImage();
         images_head.src = item.avatarUrl;
         images_head.onload = () => {
             console.log(`加载成功`);
-            context.drawImage(images_head, 160, 70 * (touxiangIndex) + 120, 50, 50);
+            context.drawImage(images_head, 220, 60 * (touxiangIndex) + 165, 40, 40);
             touxiangIndex++
         };
 
@@ -77,31 +81,33 @@ function drawRankList (data, type) {
         context.font = "26px Arial";
         context.fillStyle = "red";
         context.textAlign = 'left';
-        context.fillText(item.KVDataList[0].value, 480, 70 * (posIndex) + 160, 400);
+        context.fillText(item.KVDataList[0].value.socre ? item.KVDataList[0].value.socre : item.KVDataList[0].value, 480, 60 * (posIndex) + 190, 400);
         posIndex++;
     }
 
     // 自己的信息
-    context.font = "50px Arial";
-    context.fillStyle = "red";
-    context.textAlign = 'left';
-    context.fillText(selfInfo.rank + 1, 80, 70 * (6) + 170, 400);
+    if (selfInfo) {
+        context.font = "50px Arial";
+        context.fillStyle = "red";
+        context.textAlign = 'left';
+        context.fillText(selfInfo.rank + 1, 80, 70 * (6) + 170, 400);
 
-    context.font = "26px Arial";
-    context.fillStyle = "red";
-    context.textAlign = 'left';
-    context.fillText(selfInfo.data.nickname, 280, 70 * (6) + 170, 400);
+        context.font = "26px Arial";
+        context.fillStyle = "red";
+        context.textAlign = 'left';
+        context.fillText(selfInfo.data.nickname, 280, 70 * (6) + 170, 400);
 
-    let images_head1 = wx.createImage();
-    images_head1.src = selfInfo.data.avatarUrl;
-    images_head1.onload = () => {
-        console.log(`加载成功`);
-        context.drawImage(images_head1, 160, 70 * (6) + 130, 50, 50);
-    };
-    context.font = "26px Arial";
-    context.fillStyle = "red";
-    context.textAlign = 'left';
-    context.fillText(selfInfo.data.KVDataList[0].value, 480, 70 * (6) + 170, 400);
+        let images_head1 = wx.createImage();
+        images_head1.src = selfInfo.data.avatarUrl;
+        images_head1.onload = () => {
+            console.log(`加载成功`);
+            context.drawImage(images_head1, 160, 70 * (6) + 130, 50, 50);
+        };
+        context.font = "26px Arial";
+        context.fillStyle = "red";
+        context.textAlign = 'left';
+        context.fillText(selfInfo.data.KVDataList[0].value, 480, 70 * (6) + 170, 400);
+    }
 
     context.font = "35px Arial";
     context.fillStyle = "#570B17";
@@ -115,12 +121,12 @@ function drawRankList (data, type) {
  */
 function sortUserData(data, selfSign) {
     data.forEach((item) => {
-        item.KVDataList[0].value = JSON.parse(item.KVDataList[0].value);
+        item.KVDataList[0].value = typeof(item.KVDataList[0].value) == "string" ? JSON.parse(item.KVDataList[0].value) : item.KVDataList[0].value;
     });
     for (let i = 0; i < data.length - 1; i++) {
         for (let j = i + 1; j < data.length; j++) {
-            let money1 = data[i].KVDataList[0].value;
-            let money2 = data[j].KVDataList[0].value;
+            let money1 = data[i].KVDataList[0].value.socre;
+            let money2 = data[j].KVDataList[0].value.socre;
             money1 = money1 ? money1 : 0;
             money2 = money2 ? money2 : 0;
             if (money1 < money2) {
@@ -130,39 +136,41 @@ function sortUserData(data, selfSign) {
             }
         }
     }
-    data.forEach((item, index) => {
-        if (item.avatarUrl == selfSign) {
-            selfInfo = {};
-            selfInfo.data = item;
-            selfInfo.rank = index + 1;
-        }
-    });
+    if (selfSign) {
+        data.forEach((item, index) => {
+            if (item.avatarUrl == selfSign) {
+                selfInfo = {};
+                selfInfo.data = item;
+                selfInfo.rank = index + 1;
+            }
+        });
+    }
 }
 wx.onMessage(data => {
 
     const func = (ress, datas) => {
 
         // 测试代码
-        const shuju = [];
-        ress.data.forEach((item) => {
-            shuju.push(item);
-        });
-        ress.data.forEach((item) => {
-            shuju.push(item);
-        });
-        ress.data.forEach((item) => {
-            shuju.push(item);
-        });
-        ress.data.forEach((item) => {
-            shuju.push(item);
-        });
-        ress.data.forEach((item) => {
-            shuju.push(item);
-        });
-        ress.data.forEach((item) => {
-            shuju.push(item);
-        });
-        ress.data = shuju;
+        // const shuju = [];
+        // ress.data.forEach((item) => {
+        //     shuju.push(item);
+        // });
+        // ress.data.forEach((item) => {
+        //     shuju.push(item);
+        // });
+        // ress.data.forEach((item) => {
+        //     shuju.push(item);
+        // });
+        // ress.data.forEach((item) => {
+        //     shuju.push(item);
+        // });
+        // ress.data.forEach((item) => {
+        //     shuju.push(item);
+        // });
+        // ress.data.forEach((item) => {
+        //     shuju.push(item);
+        // });
+        // ress.data = shuju;
 
         let allYe = Math.floor((ress.data.length) / 5);
         if (((ress.data.length) % 5) == 0) {
@@ -203,7 +211,7 @@ wx.onMessage(data => {
         drawRankList(ress.data);
     };
 
-
+    console.log(`111: ${data.type}`);
     switch (parseInt(data.type)) {
         case 1: {
             wx.getFriendCloudStorage({

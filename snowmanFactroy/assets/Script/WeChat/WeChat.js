@@ -27,17 +27,11 @@ cc.wxLogin = (cb) => {
                 userInfoButton.onTap((res) => {
                     cc.log(`用户信息: ${res}`);
                     cc.log(res);
+                    cc.sys.localStorage.setItem("wxData", JSON.stringify(res));
                     userInfoButton.destroy();
                     // 托管数据
-                    const data = {socre: 12};  // 伪造数据
-                    let KVDataList = [];
-                    KVDataList.push({key:'userdata',value:JSON.stringify(data.socre)});
-                    wx.setUserCloudStorage({
-                        KVDataList:KVDataList,
-                        fail:res=>{
-                            console.log('setUserCloudStorage 接口调用失败',res);
-                        }
-                    });
+                    const data = {socre: 12, guanNum: 1};  // 伪造数据
+                    cc.updateWxData(data);
                     if (cb && cb instanceof Function) {
                          cb(res);
                     }
@@ -48,6 +42,17 @@ cc.wxLogin = (cb) => {
             },
         });
     }
+};
+
+cc.updateWxData = (data) => {
+    let KVDataList = [];
+    KVDataList.push({key:'userdata',value:JSON.stringify(data)});
+    wx.setUserCloudStorage({
+        KVDataList:KVDataList,
+        fail:res=>{
+            console.log('setUserCloudStorage 接口调用失败',res);
+        }
+    });
 };
 
 cc.wxShareCanvas = () => {

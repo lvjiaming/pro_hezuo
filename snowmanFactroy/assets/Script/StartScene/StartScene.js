@@ -8,7 +8,7 @@ cc.Class({
     },
 
     onLoad () {
-
+        cc.wxLogin();
     },
 
     start () {
@@ -25,7 +25,11 @@ cc.Class({
         cc.wxShareCanvas();
     },
     onRankClick() {
-
+        cc.resManager.loadPrefab("prefab/Rank", (prefab) => {
+            const rank = cc.instantiate(prefab);
+            rank.type = 1;
+            this.node.addChild(rank);
+        });
     },
 
     // update (dt) {},

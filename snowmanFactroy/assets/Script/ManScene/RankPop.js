@@ -13,20 +13,14 @@ cc.Class({
             type: cc.Sprite,
             tooltip: "内容",
         },
-        title: {
-            default: null,
-            type: cc.Label,
-            tooltip: "标题",
-        },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.selfLoginInfo = JSON.parse(cc.sys.localStorage.getItem("wxData"));
+       // this.selfLoginInfo = JSON.parse(cc.sys.localStorage.getItem("wxData"));
         const isWx = !!window['wx'];
-        this.fanType = this.node.fanType;
-        this.title.string = CONFIG[this.fanType];
+        this.fanType = this.node.type;
         if (isWx) {
             this.openDataContext = wx.getOpenDataContext();
             this.sharedCanvas = this.openDataContext.canvas;
@@ -57,7 +51,7 @@ cc.Class({
                 text: "showRank",
                 type: parseInt(type),
                 fanType: fanType,
-                selfSign: this.selfLoginInfo.userInfo.avatarUrl,
+                //selfSign: this.selfLoginInfo.userInfo.avatarUrl,
                 shareTicket: this.node.shareTicket,
             });
         }
@@ -68,13 +62,15 @@ cc.Class({
     drawCanvas() {
         const isWx = !!window['wx'];
         if (isWx) {
-            var texture = new cc.Texture2D();
-            texture.initWithElement(this.sharedCanvas);
-            texture.handleLoadedTexture();
-            sp = new cc.SpriteFrame(texture);
-            if (this.note) {
-                this.note.spriteFrame = sp;
-            }
+            this.scheduleOnce(() => {
+                var texture = new cc.Texture2D();
+                texture.initWithElement(this.sharedCanvas);
+                texture.handleLoadedTexture();
+                sp = new cc.SpriteFrame(texture);
+                if (this.note) {
+                    this.note.spriteFrame = sp;
+                }
+            }, 0.1);
         }
     },
     /**
