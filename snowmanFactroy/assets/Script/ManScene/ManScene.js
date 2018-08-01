@@ -26,10 +26,7 @@ cc.Class({
     onLoad () {
         const manager = cc.director.getCollisionManager();
         manager.enabled = true;
-        this.setSnowState()
-        cc.resManager.loadDirRes("DirRes", () => {
-            cc.log(`加载完！！！`);
-        });
+        this.setSnowState();
     },
 
     start () {

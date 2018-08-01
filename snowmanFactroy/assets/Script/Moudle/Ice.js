@@ -14,7 +14,7 @@ cc.Class({
 
     onLoad () {
         this.node.type = cc.gameCfg.ItemType.ICE_ITEM2;
-        this.node.runAction(cc.repeatForever(cc.moveBy(0.5, cc.p(0, Config.Jump_y))));
+        this.node.runAction(cc.repeatForever(cc.moveBy(0.5, cc.p(0, cc.gameControl.getMoveV_y()))));
     },
 
     start () {
@@ -27,7 +27,7 @@ cc.Class({
         this.runAct();
     },
     runAct() {
-        this.node.runAction(cc.repeatForever(cc.moveBy(0.5, cc.p(Config.MoveBy_x,0))));
+        this.node.runAction(cc.repeatForever(cc.moveBy(0.5, cc.p(cc.gameControl.getMoveV_x(),0))));
     },
     onCollisionEnter(other, self) {
         switch (other.node.type) {
