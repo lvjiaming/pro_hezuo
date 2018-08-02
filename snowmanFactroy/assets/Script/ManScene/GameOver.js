@@ -7,33 +7,35 @@ cc.Class({
 
     },
 
+
     onLoad () {
-        cc.wxLogin();
+
     },
 
     start () {
 
     },
 
-    onStartGameClick(event,custom) {
-        cc.gameControl.setGameType(cc.gameCfg.GameType[custom]);
-        cc.resManager.loadDirRes("DirRes", () => {
-            cc.director.loadScene("MainScene.fire");
-        });
+    onRankClick() {
+
     },
-    onShareClick() {
+    onShareNoteClick() {
         cc.wxShareCanvas();
     },
-    onRankClick() {
+    onReturnClick() {
         cc.resManager.loadPrefab("prefab/Rank", (prefab) => {
             const rank = cc.instantiate(prefab);
             rank.type = 1;
             this.node.addChild(rank);
         });
     },
-    onMzNewGameClick() {
-
+    onShareCanvasClick() {
+        cc.wxShareCanvas();
     },
+    onGameAgainClick() {
+        this.node.destroy();
+    },
+
 
     // update (dt) {},
 });

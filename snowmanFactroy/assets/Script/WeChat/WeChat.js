@@ -55,17 +55,30 @@ cc.updateWxData = (data) => {
     });
 };
 
-cc.wxShareCanvas = () => {
+cc.wxShareCanvas = (path) => {
     if(isWx){
+        path = path ? path : canvas.toTempFilePathSync({destWidth: 960, destHeight: 720});
         wx.shareAppMessage({
             title: '雪人工厂',
-            imageUrl:canvas.toTempFilePathSync({  // 截屏分享，不截屏，则此参数的值为分享图片的路径
-                destWidth: 960,
-                destHeight: 720
-            }),
+            imageUrl:path,
             success:function(res){
                 cc.log(res)
             },
+        });
+    }
+};
+cc.wxBannerAd = (style) => {
+    if (isWx) {
+        const bannerAd = wx.createBannerAd({
+            adUnitId: "",
+            style: style
+        });
+        bannerAd.onLoad(() => {
+            cc.log(`广告加载成功！`);
+            bannerAd.show();
+        });
+        bannerAd.onError((err) => {
+            cc.log(`加载失败：${err.errMsg}, ${err.errCode}`);
         });
     }
 };
