@@ -24,6 +24,7 @@ cc.Class({
         cc.resManager.loadTex("ice_fail", (sp) => {
             this.node.getComponent(cc.Sprite).spriteFrame = sp;
         });
+        this.node.sucOrFail = false;
         this.runAct();
     },
     runAct() {
@@ -34,6 +35,7 @@ cc.Class({
             case cc.gameCfg.ItemType.ICE_ITEM: {
                 this.node.stopAllActions();
                 this.runAct();
+                this.node.sucOrFail = true;
                 break;
             }
         }
