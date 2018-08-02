@@ -19,6 +19,11 @@ cc.Class({
             type: cc.Node,
             tooltip: "雪人蹲下",
         },
+        scoreNode: {
+            default: null,
+            type: cc.Label,
+            tooltip: "分数节点",
+        },
     },
 
 
@@ -71,6 +76,12 @@ cc.Class({
             return;
         }
         cc.gameControl.createIce(this.snowManBottom);
+    },
+
+    updateScore(score) {
+        if (this.scoreNode) {
+            this.scoreNode.string = score;
+        }
     },
 
     // update (dt) {},
