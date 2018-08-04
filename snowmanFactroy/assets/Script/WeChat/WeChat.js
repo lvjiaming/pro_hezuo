@@ -27,7 +27,7 @@ cc.wxLogin = (cb) => {
                 userInfoButton.onTap((res) => {
                     cc.log(`用户信息: ${res}`);
                     cc.log(res);
-                    cc.sys.localStorage.setItem("wxData", JSON.stringify(res));
+                    cc.gameControl.setSelfLoginInfo(res);
                     userInfoButton.destroy();
                     // 托管数据
                     // const data = {socre: 12, guanNum: 1};  // 伪造数据

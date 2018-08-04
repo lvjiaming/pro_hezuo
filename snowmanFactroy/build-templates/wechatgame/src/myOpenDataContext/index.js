@@ -11,6 +11,7 @@ function drawRankList (data, type) {
     //console.log(itemBg.src);
     let posIndex = 0;
     let touxiangIndex = 0;
+    let rankIndex = 0;
     for (let index = curIndex * 5; index < (curIndex * 5) + 5; index++) {
         const item = data[index];
         if (!item) {
@@ -23,10 +24,17 @@ function drawRankList (data, type) {
 
         // 名次
         if (index <= 2) {
-            context.font = "40px Arial";
-            context.fillStyle = "red";
-            context.textAlign = 'left';
-            context.fillText(index + 1, 180, 60 * (posIndex) + 200, 400);
+            let images_rank = wx.createImage();
+            images_rank.src = `rankRes/Rank${index + 1}.png`;
+            images_rank.onload = () => {
+                console.log(`加载名词成功: ${rankIndex}`);
+                context.drawImage(images_rank, 175, 60 * (rankIndex) + 170, 30, 30);
+                rankIndex ++;
+            };
+            // context.font = "40px Arial";
+            // context.fillStyle = "red";
+            // context.textAlign = 'left';
+            // context.fillText(index + 1, 180, 60 * (posIndex) + 200, 400);
         } else {
             context.font = "40px Arial";
             context.fillStyle = "red";
@@ -87,33 +95,41 @@ function drawRankList (data, type) {
 
     // 自己的信息
     if (selfInfo) {
-        context.font = "50px Arial";
-        context.fillStyle = "red";
-        context.textAlign = 'left';
-        context.fillText(selfInfo.rank + 1, 80, 70 * (6) + 170, 400);
+        if (selfInfo.rank <= 3) {
+            let images_rank = wx.createImage();
+            images_rank.src = `rankRes/Rank${selfInfo.rank}.png`;
+            images_rank.onload = () => {
+                context.drawImage(images_rank, 175, 70 * (6) + 128, 30, 30);
+            };
+        } else {
+            context.font = "40px Arial";
+            context.fillStyle = "red";
+            context.textAlign = 'left';
+            context.fillText(selfInfo.rank, 180, 70 * (6) + 160, 400);
+        }
 
-        context.font = "26px Arial";
+        context.font = "20px Arial";
         context.fillStyle = "red";
         context.textAlign = 'left';
-        context.fillText(selfInfo.data.nickname, 280, 70 * (6) + 170, 400);
+        context.fillText(selfInfo.data.nickname, 280, 70 * (6) + 153, 400);
 
         let images_head1 = wx.createImage();
         images_head1.src = selfInfo.data.avatarUrl;
         images_head1.onload = () => {
             console.log(`加载成功`);
-            context.drawImage(images_head1, 160, 70 * (6) + 130, 50, 50);
+            context.drawImage(images_head1, 220, 70 * (6) + 125, 40, 40);
         };
         context.font = "26px Arial";
         context.fillStyle = "red";
         context.textAlign = 'left';
-        context.fillText(selfInfo.data.KVDataList[0].value, 480, 70 * (6) + 170, 400);
+        context.fillText(selfInfo.data.KVDataList[0].value.socre, 480, 70 * (6) + 155, 400);
     }
 
-    context.font = "35px Arial";
-    context.fillStyle = "#570B17";
+    context.font = "25px Arial";
+    context.fillStyle = "#035157";
     context.textAlign = 'center';
     let yeStr = `第${curIndex + 1}页`;
-    context.fillText(yeStr, sharedCanvas.width / 2, 97 * (5) + 5, 400);
+    context.fillText(yeStr, sharedCanvas.width / 2, 97 * (5) + 10, 400);
 }
 /**
  *  排序

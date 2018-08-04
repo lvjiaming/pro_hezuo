@@ -8,7 +8,9 @@ cc.Class({
     },
 
     onLoad () {
-        cc.wxLogin();
+        if (!cc.gameControl.getSelfLoginInfo()) {
+            cc.wxLogin();
+        }
     },
 
     start () {

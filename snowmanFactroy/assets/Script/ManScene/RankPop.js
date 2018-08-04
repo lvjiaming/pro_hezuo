@@ -18,7 +18,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-       // this.selfLoginInfo = JSON.parse(cc.sys.localStorage.getItem("wxData"));
+       this.selfLoginInfo = cc.gameControl.getSelfLoginInfo();
         const isWx = !!window['wx'];
         this.fanType = this.node.type;
         if (isWx) {
@@ -51,7 +51,7 @@ cc.Class({
                 text: "showRank",
                 type: parseInt(type),
                 fanType: fanType,
-                //selfSign: this.selfLoginInfo.userInfo.avatarUrl,
+                selfSign: this.selfLoginInfo ? this.selfLoginInfo.userInfo.avatarUrl : null,
                 shareTicket: this.node.shareTicket,
             });
         }

@@ -29,11 +29,18 @@ cc.Class({
             type: cc.Label,
             tooltip: "倒计时",
         },
+        iceNum: {
+            default: null,
+            type: cc.Label,
+            tooltip: "可丢的数量",
+        },
     },
 
 
 
     onLoad () {
+        this.canCreIceNum = 60;
+
         const manager = cc.director.getCollisionManager();
         manager.enabled = true;
         this.setSnowState();
@@ -45,6 +52,15 @@ cc.Class({
         this.node.on("gameOver", () => {
             this.startOver();
         });
+        this.scheduleOnce(() => {
+            if (cc.gameControl.getGameType() == cc.gameCfg.GameType.SIMPLE) {
+                if (this.timerTime) {
+                    this.timerTime.node.active = true;
+                }
+                this.startTimer();
+            }
+            this.canCreIce = true;
+        }, cc.gameControl.canCreIceTime);
     },
 
     start () {
@@ -55,7 +71,7 @@ cc.Class({
             cc.log(`游戏已经开始`);
             return;
         }
-        cc.gameControl.timerTime = 30;
+        cc.gameControl.timerTime = 60;
         cc.gameControl.setGameState(true);
         cc.gameControl.setGameScore(0);
         this.updateScore(0);
@@ -68,12 +84,6 @@ cc.Class({
             cc.gameControl.startTimer();
         }
         this.setSnowState();
-        if (cc.gameControl.getGameType() == cc.gameCfg.GameType.SIMPLE) {
-            if (this.timerTime) {
-                this.timerTime.node.active = true;
-            }
-            this.startTimer();
-        }
     },
 
     startTimer() {
@@ -86,7 +96,7 @@ cc.Class({
                 this.startTimer();
             } else {
                 cc.gameControl.setGameState(false);
-                if (cc.gameControl.getCurIce()) {
+                if (cc.gameControl.getCurIce() && !cc.gameControl.getCurIce().isDes) {
                     cc.gameControl.getCurIce().isLast = true;
                 } else {
                     this.startOver();
@@ -117,12 +127,27 @@ cc.Class({
             }
         }
     },
+    updataIceNum(num) {
+        if (this.iceNum) {
+            this.iceNum.string = num;
+        }
+    },
     onStartIce() {
         if (!cc.gameControl.getGameState()) {
             cc.log(`游戏未开始`);
             return;
         }
-        cc.gameControl.createIce(this.snowManBottom);
+        if (cc.gameControl.getGameType() == cc.gameCfg.GameType.SIMPLE) {
+
+            if (this.canCreIce && this.canCreIceNum > 0) {
+                cc.gameControl.createIce(this.snowManBottom);
+                this.canCreIceNum--;
+                this.updataIceNum(this.canCreIceNum);
+            }
+        } else {
+            cc.gameControl.createIce(this.snowManBottom);
+        }
+
     },
 
     updateScore(score) {

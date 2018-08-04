@@ -20,26 +20,40 @@ cc.Class({
     start () {
 
     },
+    onDestroy(){
+        this.node.isDes = true;
+    },
     iceFail() {
         cc.resManager.loadTex("ice_fail", (sp) => {
             this.node.getComponent(cc.Sprite).spriteFrame = sp;
         });
         this.node.sucOrFail = false;
         this.runAct();
+        this.canUpdata = true;
     },
     runAct() {
-        this.node.runAction(cc.repeatForever(cc.moveBy(0.5, cc.p(cc.gameControl.getMoveV_x(),0))));
+        if (cc.gameControl.getGameType() == cc.gameCfg.GameType.SIMPLE) {
+            this.node.runAction(cc.repeatForever(cc.moveBy(0.5, cc.p(cc.gameControl.getMoveV_x(),0))));
+        }
     },
     onCollisionEnter(other, self) {
         switch (other.node.type) {
             case cc.gameCfg.ItemType.ICE_ITEM: {
                 this.node.stopAllActions();
-                this.runAct();
+                if (cc.gameControl.getGameType() == cc.gameCfg.GameType.CRAZY) {
+                    this.canUpdata = true;
+                } else {
+                    this.runAct();
+                }
                 this.node.sucOrFail = true;
                 break;
             }
         }
     },
 
-    // update (dt) {},
+    update (dt) {
+        if (cc.gameControl.getGameType() == cc.gameCfg.GameType.CRAZY && this.canUpdata) {
+            this.node.setPositionX(this.node.getPositionX() + (1.5 * cc.gameControl.getCrzayA() + 1.5));
+        }
+    },
 });
