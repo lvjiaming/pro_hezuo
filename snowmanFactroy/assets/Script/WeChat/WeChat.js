@@ -84,3 +84,24 @@ cc.wxBannerAd = (style) => {
         });
     }
 };
+cc.wxRewardedVideoAd = (cb) => {
+    if (isWx) {
+        // const sysemInfo = wx.getSystemInfoSync();
+        // if (sysemInfo.SDKVersion)
+        const rewardedVideoAd = wx.createRewardedVideoAd({
+            adUnitId: "",
+        });
+        rewardedVideoAd.onLoad(() => {
+            cc.log(`广告加载成功！`);
+            rewardedVideoAd.show();
+        });
+        rewardedVideoAd.onError((err) => {
+            cc.log(`加载失败：${err.errMsg}`);
+        });
+        rewardedVideoAd.onClose((res) => {
+            if (cb) {
+                cb(res.isEnded);
+            }
+        });
+    }
+};

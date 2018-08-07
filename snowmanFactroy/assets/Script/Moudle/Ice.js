@@ -30,6 +30,9 @@ cc.Class({
         this.node.sucOrFail = false;
         this.runAct();
         this.canUpdata = true;
+        if (cc.gameControl.getGameType() == cc.gameCfg.GameType.CRAZY) {
+            cc.find("Canvas").emit("iceFail");
+        }
     },
     runAct() {
         if (cc.gameControl.getGameType() == cc.gameCfg.GameType.SIMPLE) {

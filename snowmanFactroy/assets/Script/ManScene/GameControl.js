@@ -18,8 +18,10 @@ const GameControl = cc.Class({
     gameScore: null, // 游戏的分数
     timerTime: null, // 倒计时的时间
     canCreIceTime: null, // 可以丢的时间
+    gameIsPause: null, // 游戏是否暂停
 
     crazyA: null, // 疯狂模式的加速
+    canFailIceNum: null, // 可是失败的数量
 
     curIce: null,// 当前的冰淇凌
     ctor() {
@@ -35,6 +37,8 @@ const GameControl = cc.Class({
         this.canCreIceTime = 10;
         this.selfLoginInfo = null;
         this.crazyA = 0;
+        this.canFailIceNum = 5;
+        this.gameIsPause = false;
     },
     createIceTong(node) {
         let time = (Math.random()*(30-15) + 15) / 10;
