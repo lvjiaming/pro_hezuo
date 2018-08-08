@@ -29,7 +29,7 @@ cc.Class({
 
     update (dt) {
         if (cc.gameControl.getGameType() == cc.gameCfg.GameType.CRAZY) {
-            this.node.setPositionX(this.node.getPositionX() + (1.5 * cc.gameControl.getCrzayA() + 1.5));
+            this.node.x = (this.node.x + (1.5 * cc.gameControl.getCrzayA() + 1.5));
         }
     },
 });

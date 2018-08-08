@@ -95,6 +95,17 @@ cc.Class({
     onCloseClick() {
         this.node.destroy();
     },
+    onQunRankClick() {
+        cc.wxShareCanvas(null, (res) => {
+            if (res.shareTickets && res.shareTickets[0]) {
+                this.node.type = 2;
+                this.fanType = this.node.type;
+                this.node.shareTicket = res.shareTickets[0];
+                this.sendToKaiFangYu(this.fanType, 3);
+                this.drawCanvas();
+            }
+        });
+    },
 
     // update (dt) {},
 });

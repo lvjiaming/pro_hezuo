@@ -27,7 +27,7 @@ const GameControl = cc.Class({
     ctor() {
         this.isGame = false;
         this.gameType = null;
-        this.moveV_x = 74 / 3;
+        this.moveV_x = 74 / 3 * 1.5;
         this.moveV_y = -160;
         this.gameTime = 0;
         this.curTimer = null;
@@ -41,7 +41,7 @@ const GameControl = cc.Class({
         this.gameIsPause = false;
     },
     createIceTong(node) {
-        let time = (Math.random()*(30-15) + 15) / 10;
+        let time = (Math.random()*(40-20) + 20) / 10;
         if (this.gameType == cc.gameCfg.GameType.CRAZY) {
             time = (Math.random()*(20-10) + 10) / 10
         }

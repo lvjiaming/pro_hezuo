@@ -57,14 +57,17 @@ cc.updateWxData = (data) => {
     }
 };
 
-cc.wxShareCanvas = (path) => {
+cc.wxShareCanvas = (path, cb) => {
     if(isWx){
         path = path ? path : canvas.toTempFilePathSync({destWidth: 960, destHeight: 720});
         wx.shareAppMessage({
             title: '雪人工厂',
             imageUrl:path,
             success:function(res){
-                cc.log(res)
+                cc.log(res);
+                if (cb) {
+                    cb(res);
+                }
             },
         });
     }

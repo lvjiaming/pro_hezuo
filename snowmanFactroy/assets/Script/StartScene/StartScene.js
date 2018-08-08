@@ -11,6 +11,27 @@ cc.Class({
         if (!cc.gameControl.getSelfLoginInfo()) {
             cc.wxLogin();
         }
+        const self = this;
+        cc.game.on(cc.game.EVENT_SHOW, function () {
+            if (isWx) {
+                wx.onShow((res) => {
+                    cc.log("info");
+                    cc.log(res);
+                    if (res.shareTicket) {
+                        cc.resManager.loadPrefab("prefabs/Rank", (err, prefab) => {
+                            const rankPop = self.node.getChildByName("Rank");
+                            if (rankPop) {
+                                rankPop.destroy();
+                            }
+                            const pop = cc.instantiate(prefab);
+                            pop.fanType = 2;
+                            pop.shareTicket = res.shareTicket;
+                            self.node.addChild(pop);
+                        });
+                    }
+                });
+            }
+        })
     },
 
     start () {
