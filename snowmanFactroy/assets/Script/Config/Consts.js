@@ -8,5 +8,11 @@ const Const = {
         SIMPLE: 1, // 普通
         CRAZY: 2, // 疯狂
     },
+    ColorType: {
+        HONG: 1,
+        HUANG: 2,
+        LAN: 3,
+        LV: 4,
+    },
 };
 cc.gameCfg = Const;

@@ -29,22 +29,22 @@ cc.Class({
             type: cc.Label,
             tooltip: "倒计时",
         },
-        iceNum: {
-            default: null,
-            type: cc.Label,
-            tooltip: "可丢的数量",
-        },
-        iceMing: {
-            default: null,
-            type: cc.Label,
-            tooltip: "命",
-        },
+        // iceNum: {
+        //     default: null,
+        //     type: cc.Label,
+        //     tooltip: "可丢的数量",
+        // },
+        // iceMing: {
+        //     default: null,
+        //     type: cc.Label,
+        //     tooltip: "命",
+        // },
     },
 
 
 
     onLoad () {
-        this.canCreIceNum = 60;
+        // this.canCreIceNum = 60;
         this.canRevive = true;
         this.canAddNum = true;
 
@@ -80,9 +80,9 @@ cc.Class({
                 }
                 return
             }
-            if (this.iceMing) {
-                this.iceMing.string = `x ${5 - this.curIceFailNum}`;
-            }
+            // if (this.iceMing) {
+            //     this.iceMing.string = `x ${5 - this.curIceFailNum}`;
+            // }
         });
         // this.scheduleOnce(() => {
         //     if (cc.gameControl.getGameType() == cc.gameCfg.GameType.SIMPLE) {
@@ -117,8 +117,8 @@ cc.Class({
         //     this.canCreIce = true;
         // }, cc.gameControl.canCreIceTime);
         cc.gameControl.createIceTong(this.iceTongCreateNode);
-        this.canCreIceNum = 30;
-        this.updataIceNum(this.canCreIceNum);
+        // this.canCreIceNum = 30;
+        // this.updataIceNum(this.canCreIceNum);
     },
     gamePause() {
         // cc.gameControl.gameIsPause = true;
@@ -126,8 +126,8 @@ cc.Class({
     gameContinue() {
         // cc.gameControl.gameIsPause = false;
         // this.startTimer();
-        this.canCreIceNum = 10;
-        this.updataIceNum(this.canCreIceNum);
+        // this.canCreIceNum = 10;
+        // this.updataIceNum(this.canCreIceNum);
     },
     cancelAddNum() {
         cc.gameControl.setGameState(false);
@@ -140,21 +140,21 @@ cc.Class({
     gameTypeShow() {
         switch (cc.gameControl.getGameType()) {
             case cc.gameCfg.GameType.SIMPLE: {
-                if (this.iceMing) {
-                    this.iceMing.node.parent.active = false;
-                }
-                if (this.iceNum) {
-                    this.iceNum.node.parent.active = true;
-                }
+                // if (this.iceMing) {
+                //     this.iceMing.node.parent.active = false;
+                // }
+                // if (this.iceNum) {
+                //     this.iceNum.node.parent.active = true;
+                // }
                 break;
             }
             case cc.gameCfg.GameType.CRAZY: {
-                if (this.iceMing) {
-                    this.iceMing.node.parent.active = true;
-                }
-                if (this.iceNum) {
-                    this.iceNum.node.active = false;
-                }
+                // if (this.iceMing) {
+                //     this.iceMing.node.parent.active = true;
+                // }
+                // if (this.iceNum) {
+                //     this.iceNum.node.active = false;
+                // }
                 break;
             }
         }
@@ -241,28 +241,30 @@ cc.Class({
             return;
         }
         if (cc.gameControl.getGameType() == cc.gameCfg.GameType.SIMPLE) {
-            this.canCreIceNum--;
-            if (this.canCreIceNum > 0) {
-                cc.gameControl.createIce(this.snowManBottom);
-            } else {
-                if (this.canAddNum) {
-                    this.canAddNum = false;
-                    this.gamePause();
-                    cc.resManager.loadPrefab("prefab/addNumPop", (prefab) => {
-                        const pop = cc.instantiate(prefab);
-                        this.node.addChild(pop);
-                    });
-                } else {
-                    cc.gameControl.setGameState(false);
-                    if (cc.gameControl.getCurIce() && cc.gameControl.getCurIce().isDes) {
-                        this.startOver();
-                    } else {
-                        cc.gameControl.getCurIce().isLast = true;
-                    }
-                }
-            }
-            this.canCreIceNum = this.canCreIceNum ? this.canCreIceNum : 0;
-            this.updataIceNum(this.canCreIceNum);
+            // this.canCreIceNum--;
+            cc.gameControl.createIce(this.snowManBottom);
+
+            // if (this.canCreIceNum > 0) {
+            //     cc.gameControl.createIce(this.snowManBottom);
+            // } else {
+            //     if (this.canAddNum) {
+            //         this.canAddNum = false;
+            //         this.gamePause();
+            //         cc.resManager.loadPrefab("prefab/addNumPop", (prefab) => {
+            //             const pop = cc.instantiate(prefab);
+            //             this.node.addChild(pop);
+            //         });
+            //     } else {
+            //         cc.gameControl.setGameState(false);
+            //         if (cc.gameControl.getCurIce() && cc.gameControl.getCurIce().isDes) {
+            //             this.startOver();
+            //         } else {
+            //             cc.gameControl.getCurIce().isLast = true;
+            //         }
+            //     }
+            // }
+            // this.canCreIceNum = this.canCreIceNum ? this.canCreIceNum : 0;
+            // this.updataIceNum(this.canCreIceNum);
         } else {
             cc.gameControl.createIce(this.snowManBottom);
         }

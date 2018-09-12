@@ -1,9 +1,10 @@
 {
-  "ver": "1.0.0",
+  "ver": "2.2.0",
   "uuid": "458cfc3a-0ee5-4b9b-8655-c804b5a5bd59",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
+  "premultiplyAlpha": false,
   "subMetas": {
     "mainScene_BtnStartIce": {
       "ver": "1.0.3",
